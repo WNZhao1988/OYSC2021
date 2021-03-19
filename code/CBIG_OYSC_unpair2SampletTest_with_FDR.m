@@ -1,4 +1,4 @@
-function [output] = CBIG_OYSC_unpair2SampletTest_with_FDR(dataSC, significance, savepath, is_spectralRadius, alpha)
+function [output] = CBIG_OYSC_unpair2SampletTest_with_FDR(dataSC, significance, savepath, is_spectralRadius, alpha, cbar)
 % CBIG_OYSC_unpair2SampletTest_with_FDR(data, is_spectralRadius, alpha)
 % 
 % This function is to calculate the unpaired two sample t-test with FDR correction. 
@@ -21,6 +21,9 @@ function [output] = CBIG_OYSC_unpair2SampletTest_with_FDR(dataSC, significance, 
 %        
 %      - alpha: 
 %        Dynamics of structural connectivity matrix, defalut = 0.
+% 
+%      - cbar: 
+%        Controling the rang of colorbar, defalut = [min(matrix),max(matrix)].
 % 
 % Output: 
 %      - significant_index:
@@ -142,7 +145,9 @@ P_log_full_sym = P_log_full + P_log_full'; % convert to symmtric matrix
 
 %% visualization
 [P_log_full_sym_reorder] = ch_plot_TY400_fc(P_log_full_sym, 'TY126');
-caxis([-10 10]);
+if ~isempty(cbar) 
+   caxis(cbar); 
+end
 axs2 = struct(gca);
 cb2 = axs2.Colorbar;
 cb2.Label.String = ' ';
